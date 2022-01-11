@@ -14,7 +14,7 @@ function get_source(){
     for (let source of Memory.sources){
         let previous_harvester = source.bindHarvester
         if ((previous_harvester == null)|| (!Game.creeps[previous_harvester.name])){
-            //如果判定到旧绑定农民已经牺牲，返回本资源点
+            //如果判定到旧绑定农民已经牺牲，返回本资源点，注意先判断是否为null，防止开局时访问null的属性而报错
             return source
         }
     }
