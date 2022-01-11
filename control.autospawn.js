@@ -135,14 +135,20 @@ var autoSpawn = {
     },
 
     get stage(){
-        let room = Game.rooms['E52N34'];
+        let room = Game.rooms[Memory.roomName];
         let containers = room.find(FIND_STRUCTURES, {filter: (structure) => structure.structureType == STRUCTURE_CONTAINER})
         let carriers = _.filter(Game.creeps, (creep) => creep.memory.role == 'carrier')
-        if (room.energyCapacityAvailable<550){var result = 1}
-        if (containers.length>0){var result = 2}
-        if (room.energyCapacityAvailable>=550){var result = 3}
-        if (room.energyCapacityAvailable>=800){var result = 4}
-        if (room.energyCapacityAvailable>=1200){var result = 5}
+        //阶段一：开局
+        if (room.energyCapacityAvailable < 550){var result = 1}
+        //阶段二：拥有容器与资源点等量，挖运分离建立
+        if (containers.length == Memory.sources.length){var result = 2}
+        //阶段三：至少拥有五个extension
+        if (room.energyCapacityAvailable >= 550){var result = 3}
+        //阶段四：至少拥有十个extension
+        if (room.energyCapacityAvailable >= 800){var result = 4}
+        //阶段五：至少拥有二十个extension
+        if (room.energyCapacityAvailable >= 1200){var result = 5}
+        
         //阶段回滚，防止意外错误导致整个系统宕机
         //宕机保障1：能量太少，处理爬死亡后重生而能量不足的情况，生低配的
         if (room.energyAvailable<=300){var result = 2}
