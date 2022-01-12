@@ -18,8 +18,8 @@ module.exports.loop = function () {
     funcs.run_creeps();
     
     //遍历塔并调用塔的工作程序
-    var towers = Game.rooms['E52N34'].find(FIND_STRUCTURES, {filter: (structure) => {return structure.structureType == STRUCTURE_TOWER}});
-    for (var tower in towers){
-        structureTower.run(towers[tower]);
+    var towers = Game.rooms[Memory.roomName].find(FIND_STRUCTURES, {filter: (structure) => {return structure.structureType == STRUCTURE_TOWER}});
+    for (var tower of towers){
+        structureTower.run(tower);
     }
 }

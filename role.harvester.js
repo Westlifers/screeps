@@ -8,10 +8,8 @@ var roleHarvester = {
 
         //后期非carry爬的行为逻辑
         if (!creep.memory.carry){
-            //获取container的坐标，移动到这个坐标
-            let pos = creep.memory.source.bindContainer.pos
             if (creep.harvest(target) == ERR_NOT_IN_RANGE){
-                creep.moveTo(pos)
+                creep.moveTo(creep.memory.container)
             }
         }
 
