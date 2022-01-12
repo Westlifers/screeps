@@ -84,7 +84,7 @@ var autoSpawn = {
                     break
             }
             //后面的阶段都要试图绑定容器
-            if (Game.spawns['Spawn'].spawnCreep(bodyPart, newName, {memory:{role:'harvester', carry: false, source: source, container: container}}) == 0){
+            if (Game.spawns['Spawn'].spawnCreep(bodyPart, newName, {memory:{role:'harvester', carry: false, source: source, containerId: container.id}}) == 0){
                 console.log('Creating ' + newName + ' of stage ' + s)
                 var is_success = true
             }

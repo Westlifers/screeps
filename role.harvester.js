@@ -9,7 +9,10 @@ var roleHarvester = {
         //后期非carry爬的行为逻辑
         if (!creep.memory.carry){
             if (creep.harvest(target) == ERR_NOT_IN_RANGE){
-                creep.moveTo(creep.memory.container)
+                container = creep.room.find(FIND_STRUCTURES, {filter:
+                    (structure) => (structure.structureType == STRUCTURE_CONTAINER && structure.id == creep.memory.containerId)
+                })[0]
+                creep.moveTo(container)
             }
         }
 
