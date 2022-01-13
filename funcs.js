@@ -1,35 +1,38 @@
 //main使用到的函数
 
-var autoSpawn = require('control.autospawn');
-var roleHarvester = require('role.harvester');
-var roleUpgrader = require('role.upgrader');
-var roleBuilder = require('role.builder');
-var roleFixer = require('role.fixer');
-var roleCarrier = require('role.carrier');
-var roleWallrepairer = require('role.wallrepairer');
-var roleAttacker = require('role.attacker');
+var autoSpawn = require('control.autospawn')
+var roleHarvester = require('role.harvester')
+var roleUpgrader = require('role.upgrader')
+var roleBuilder = require('role.builder')
+var roleFixer = require('role.fixer')
+var roleCarrier = require('role.carrier')
+var roleWallrepairer = require('role.wallrepairer')
+var roleFiller = require('role.filler')
+var roleAttacker = require('role.attacker')
 
 var funcs = {
     clear_memory: function(){
         for(var name in Memory.creeps) {
             if(!Game.creeps[name]) {
                 delete Memory.creeps[name];
-                console.log(`正在清理已死亡的creep${name}的内存`);
+                console.log(`正在清理已死亡的creep${name}的内存`)
             }
         }
     },
     
     check_creeps: function(){
-        var lackHarvesters= (_.filter(Game.creeps, (creep) => (creep.memory.role == 'harvester')).length < autoSpawn.harvesters_needed);
-        var lackCarriers= (_.filter(Game.creeps, (creep) => creep.memory.role == 'carrier').length < autoSpawn.carriers_needed);
-        var lackBuilders= (_.filter(Game.creeps, (creep) => creep.memory.role == 'builder').length < autoSpawn.builders_needed);
-        var lackUpgraders= (_.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader').length < autoSpawn.upgraders_needed);
-        var lackFixers= (_.filter(Game.creeps, (creep) => creep.memory.role == 'fixer').length < autoSpawn.fixers_needed);
-        var lackWallrepairers= (_.filter(Game.creeps, (creep) => creep.memory.role == 'wallrepairer').length < autoSpawn.wallrepairers_needed);
-        var lackAny= false;
+        var lackHarvesters = (_.filter(Game.creeps, (creep) => (creep.memory.role == 'harvester')).length < autoSpawn.harvesters_needed)
+        var lackCarriers = (_.filter(Game.creeps, (creep) => creep.memory.role == 'carrier').length < autoSpawn.carriers_needed)
+        var lackBuilders = (_.filter(Game.creeps, (creep) => creep.memory.role == 'builder').length < autoSpawn.builders_needed)
+        var lackUpgraders = (_.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader').length < autoSpawn.upgraders_needed)
+        var lackFixers = (_.filter(Game.creeps, (creep) => creep.memory.role == 'fixer').length < autoSpawn.fixers_needed)
+        var lackWallrepairers = (_.filter(Game.creeps, (creep) => creep.memory.role == 'wallrepairer').length < autoSpawn.wallrepairers_needed)
+        var lackFillers = (_.filter(Game.creeps, (creep) => creep.memory.role == 'filler').length < autoSpawn.fillers_needed)
+        var lackAny = false;
         var obj = {
             lackHarvesters: lackHarvesters,
             lackCarriers: lackCarriers,
+            lackFillers: lackFillers,
             lackUpgraders: lackUpgraders,
             lackBuilders: lackBuilders,
             lackFixers: lackFixers,
@@ -38,7 +41,7 @@ var funcs = {
         for (let item in obj){
             lackAny = (lackAny || obj[item])
         }
-        obj.lackAny = lackAny;
+        obj.lackAny = lackAny
         
         return obj
     },
@@ -47,25 +50,28 @@ var funcs = {
         for(var name in Game.creeps) {
             var creep = Game.creeps[name];
             if(creep.memory.role == 'harvester') {
-                roleHarvester.run(creep);
+                roleHarvester.run(creep)
             }
             else if(creep.memory.role == 'upgrader') {
-                roleUpgrader.run(creep);
+                roleUpgrader.run(creep)
             }
             else if(creep.memory.role == 'builder') {
-                roleBuilder.run(creep);
+                roleBuilder.run(creep)
             }
             else if(creep.memory.role == 'fixer') {
-                roleFixer.run(creep);
+                roleFixer.run(creep)
             }
             else if(creep.memory.role == 'carrier'){
-                roleCarrier.run(creep);
+                roleCarrier.run(creep)
             }
             else if(creep.memory.role == 'wallrepairer'){
-                roleWallrepairer.run(creep);
+                roleWallrepairer.run(creep)
             }
             else if(creep.memory.role == 'attacker'){
-                roleAttacker.run(creep);
+                roleAttacker.run(creep)
+            }
+            else if(creep.memory.role == 'filler'){
+                roleFiller.run(creep)
             }
         }
     },

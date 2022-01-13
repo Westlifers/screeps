@@ -51,8 +51,9 @@ var autoSpawn = {
     },
     upgraders_needed: 3,
     fixers_needed: 2,
-    carriers_needed: 3,
+    carriers_needed: 2,
     wallrepairers_needed: 1,
+    fillers_needed: 2,
 
     spawnHarvester: function(){
         let newName = 'Harvester' + Game.time
@@ -218,6 +219,29 @@ var autoSpawn = {
         }
     },
 
+    spawnFiller: function(){
+        let newName = 'Filler' + Game.time
+        let s = this.stage
+        switch(s){
+            case 1:
+            case 2:
+                var bodyPart=[WORK, CARRY, MOVE, MOVE]
+                break
+            case 3:
+                var bodyPart=[WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE]
+                break
+            case 4:
+                var bodyPart=[WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE]
+                break
+            case 5:
+                var bodyPart=[WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE]
+                break
+        }
+        if (Game.spawns['Spawn'].spawnCreep(bodyPart, newName, {memory:{role:'filler'}}) == 0){
+            console.log('Creating ' + newName + ' of stage ' + s);
+        }
+    },
+
     get stage(){
 
         let room = Game.rooms[Memory.roomName];
@@ -251,6 +275,13 @@ var autoSpawn = {
             if (lacks[lackType]){
                 //第一阶段不要carrier，fixer和wallrepairer
                 if (((lackType == 'lackFixers' || lackType == 'lackWallrepairers' || lackType == 'lackCarriers') && this.stage == 1) || lackType == 'lackAny'){continue}
+                //如果没有storage，不要filler
+                if (lackType == 'lackFillers'){
+                    let storage = Game.rooms[Memory.roomName].storage
+                    if (!storage){
+                        continue
+                    }
+                }
                 //尝试生成
                 let func_name = lackType.slice(4).slice(0,-1);
                 func_name = 'this.' + 'spawn' + func_name;
