@@ -77,26 +77,20 @@ var funcs = {
     },
     
     attack: function(){
-        /* 
-        Memory.attackTarget是一个对象
-        {
-            room:{
-                targetRoomName: 房间号
-                targetStand: 手动选取一个站位
-                targetWallList: 破墙路径，一些墙的id组成的list
-                targetSpawnId：此房间的重生点id
-            },
-            attackers_needed：用多少个attacker进攻
-            attackers_num：目前剩余的attacker
-            is_finished：默认false，攻击成功就改成true
+        let flag = Game.flags['attackhere']
+        //正常来说既然能调用这个函数，说明‘attackhere’这个旗帜是存在的，但是以防万一，还是判断一下
+        if (!flag){return}
+        let attaker = Game.creeps['我是一个没有感情滴杀手']
+        //如果没有attacker，尝试生成一个
+        if (!attaker){
+            Game.spawns['Spawn'].spawnCreep([ATTACK, ATTACK, ATTACK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], '我是一个没有感情滴杀手', {memory: {role: 'attacker'}})
+            console.log('开始制造杀手')
+            //无论生成是否成功都直接返回，后面没必要执行了
+            return
         }
-        */
-       //如果attacker不够，尝试按照指定的attackers_num生attacker
-        if (Memory.attackTarget.attackers_num < Memory.attackTarget.attackers_needed){
-            let attempt = roleAttacker.create(Memory.attackTarget.room.targetRoomName, Memory.attackTarget.room.targetStand, Memory.attackTarget.room.targetWallList, Memory.attackTarget.room.targetSpawnId)
-            if (attempt){
-                console.log('攻击任务执行中，生成attacker')
-            }
+        //如果有，运行它的run函数
+        else{
+            roleAttacker.run(attaker)
         }
     }
     
