@@ -14,4 +14,16 @@ But that doesn't mean I know nothing about it. Instead, for a stretch of time I 
 ****
 ## Usage
 ### Start
-To start a game with these files, you'll need functions included in the 'init.js', which, for now, means a single 'init()'. This functions requirs two paraments--roomName and sourceIds
+To start a game with these files, you'll need functions included in the 'init.js', which, for now, means a single 'init()'. It requirs two paraments--roomName and sourceIds. The former is a string of the name of your room (yeah, my script supports one room only, but just for now. I'll add corresponding codes later) and the latter is a array consisting of the ids of resources in your room.  
+use the following code to initialize your room:
+```javascript
+require("control.init").initGame(roomName, sourceIds)
+```
+### Paint
+There's an important global varible in memory. That is 'painting'. It's a switch to decide the behaviour of your wallrepairers and towers. By setting it true, your wallrepaires and towers will keep repairing walls (if their logic allows them to do so) and vise verse.
+
+### Attack
+In order to attack a target room, you don't need to run any code in console. Put a flag named 'attackhere', your base will automatically spawn an attacker, who will move to the flag. Moreover, if the flag covers a building, your attacker will try to destroy this building.  
+There's some advanced usage of this simple attack mode: 
+1. Sometimes you can't put the flag directly on your target for some reasons like, avoiding to cost too much CPU or bypassing a room of a high level. In this case, I suggest that you put the flag halfway to shorten the path or to decide the path manually.
+2. This simple attack mode can't attack creeps. To destroy a room, just take down a wall, go into the room, and destroy its spawn. In the wake of that, the room will decay by time. You can speed up this process by destroying the controller.
