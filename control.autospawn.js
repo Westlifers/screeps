@@ -52,7 +52,14 @@ var autoSpawn = {
     upgraders_needed: 2,
     fixers_needed: 1,
     carriers_needed: 2,
-    wallrepairers_needed: 1,
+    get wallrepairers_needed(){
+        if (Memory.painting){
+            return 1
+        }
+        else{
+            return 0
+        }
+    },
     fillers_needed: 2,
 
     spawnHarvester: function(){
