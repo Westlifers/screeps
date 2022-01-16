@@ -14,7 +14,7 @@ But that doesn't mean I know nothing about it. Instead, for a stretch of time I 
 ****
 ## Usage
 ### Start
-To start a game with these files, you'll need functions included in the 'init.js', which, for now, means a single 'init()'. It requirs two paraments--roomName and sourceIds. The former is a string of the name of your room (yeah, my script supports one room only, but just for now. I'll add corresponding codes later) and the latter is a array consisting of the ids of resources in your room.  
+To start a game with these files, you'll need functions included in the 'init.js', which, for now, means a single 'init()'. It requirs two paraments--roomName and sourceIds. The former is a string of the name of your room (yeah, my script supports one room only, but just for now. I'll add corresponding codes later) and the latter is an array consisting of the ids of resources in your room.  
 use the following code to initialize your room:
 ```javascript
 require("control.init").initGame(roomName, sourceIds)
