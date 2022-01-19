@@ -20,14 +20,14 @@ var funcs = {
         }
     },
     
-    check_creeps: function(){
-        var lackHarvesters = (_.filter(Game.creeps, (creep) => (creep.memory.role == 'harvester')).length < autoSpawn.harvesters_needed)
-        var lackCarriers = (_.filter(Game.creeps, (creep) => creep.memory.role == 'carrier').length < autoSpawn.carriers_needed)
-        var lackBuilders = (_.filter(Game.creeps, (creep) => creep.memory.role == 'builder').length < autoSpawn.builders_needed)
-        var lackUpgraders = (_.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader').length < autoSpawn.upgraders_needed)
-        var lackFixers = (_.filter(Game.creeps, (creep) => creep.memory.role == 'fixer').length < autoSpawn.fixers_needed)
-        var lackWallrepairers = (_.filter(Game.creeps, (creep) => creep.memory.role == 'wallrepairer').length < autoSpawn.wallrepairers_needed)
-        var lackFillers = (_.filter(Game.creeps, (creep) => creep.memory.role == 'filler').length < autoSpawn.fillers_needed)
+    check_creeps: function(room){
+        var lackHarvesters = (_.filter(Game.creeps, (creep) => (creep.memory.role == 'harvester' && creep.room.name == room.roomName)).length < autoSpawn.harvesters_needed)
+        var lackCarriers = (_.filter(Game.creeps, (creep) => creep.memory.role == 'carrier' && creep.room.name == room.roomName).length < autoSpawn.carriers_needed)
+        var lackBuilders = (_.filter(Game.creeps, (creep) => creep.memory.role == 'builder' && creep.room.name == room.roomName).length < autoSpawn.builders_needed)
+        var lackUpgraders = (_.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader' && creep.room.name == room.roomName).length < autoSpawn.upgraders_needed)
+        var lackFixers = (_.filter(Game.creeps, (creep) => creep.memory.role == 'fixer' && creep.room.name == room.roomName).length < autoSpawn.fixers_needed)
+        var lackWallrepairers = (_.filter(Game.creeps, (creep) => creep.memory.role == 'wallrepairer' && creep.room.name == room.roomName).length < autoSpawn.wallrepairers_needed)
+        var lackFillers = (_.filter(Game.creeps, (creep) => creep.memory.role == 'filler' && creep.room.name == room.roomName).length < autoSpawn.fillers_needed)
         var lackAny = false;
         var obj = {
             lackHarvesters: lackHarvesters,
