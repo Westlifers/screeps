@@ -1,6 +1,6 @@
-var funcs = require('funcs');
-var autoSpawn = require('control.autospawn');
-var structureTower = require('structure.tower');
+var funcs = require('funcs')
+var autoSpawn = require('control.autospawn')
+var structureTower = require('structure.tower')
 
 
 module.exports.loop = function () {
@@ -9,17 +9,24 @@ module.exports.loop = function () {
     funcs.clear_memory();
 
     //若发现爬不够，尝试创造creep
-    var lacks = funcs.check_creeps();
+    var lacks = funcs.check_creeps()
     if (lacks.lackAny){
-        autoSpawn.trySpawn(lacks);
+        autoSpawn.trySpawn(lacks)
     }
 
     //调用所有creep的运行逻辑
-    funcs.run_creeps();
+    funcs.run_creeps()
     
     //遍历塔并调用塔的工作程序
     var towers = Game.rooms[Memory.roomName].find(FIND_STRUCTURES, {filter: (structure) => {return structure.structureType == STRUCTURE_TOWER}});
     for (var tower of towers){
-        structureTower.run(tower);
+        structureTower.run(tower)
+    }
+
+    //检查是否有攻击任务（旗帜）
+    for (flag in Game.flags){
+        if (flag == 'attackhere'){
+            funcs.attack()
+        }
     }
 }

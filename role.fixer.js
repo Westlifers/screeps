@@ -16,7 +16,7 @@ var roleFixer = {
         //维修逻辑
         if(creep.memory.fixing) {
             var target = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: (structure)=>{
-                return (((structure.structureType != STRUCTURE_WALL && structure.structureType != STRUCTURE_RAMPART) && structure.hits<structure.hitsMax) || (structure.structureType == STRUCTURE_RAMPART && structure.hitsMax/structure.hits >= 10))
+                return (((structure.structureType != STRUCTURE_WALL && structure.structureType != STRUCTURE_RAMPART) && structure.hits<structure.hitsMax) || (structure.structureType == STRUCTURE_RAMPART && structure.hitsMax/structure.hits >= 3))
             }});
             if (target) {
                 if (creep.repair(target)==ERR_NOT_IN_RANGE){
