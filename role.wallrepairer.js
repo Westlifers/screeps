@@ -4,11 +4,11 @@ var roleWallrepairer = {
 
     get repaierHitsTo(){
         //优先查询内存中的painting变量是否允许刷墙，若否，返回levels[0]（这意味着认为墙等级为0，所有墙只刷到1/3000）
-        var levels = [3000, 300, 150, 60, 30, 15, 6, 3, 2, 1.5, 1.2, 1];
+        var levels = [3000, 300, 150, 60, 30, 15, 6, 3, 2, 1.5, 1.2, 1]
         if (!Memory.painting){return levels[0]}
         if (Memory.wallLevel <= levels.length - 1){
             var go_to_next_level = true;
-            var walls = Game.rooms[Memory.roomName].find(FIND_STRUCTURES, {filter: (structure) => (structure.structureType == STRUCTURE_WALL && structure.pos.y != 0)});
+            var walls = creep.room.find(FIND_STRUCTURES, {filter: (structure) => (structure.structureType == STRUCTURE_WALL && structure.pos.y != 0)});
             for (let wallIndex in walls){
                 let wall = walls[wallIndex];
                 if (wall.hitsMax/wall.hits <= levels[Memory.wallLevel]){
@@ -20,7 +20,7 @@ var roleWallrepairer = {
             }
             if (go_to_next_level){
                 Memory.wallLevel = Memory.wallLevel + 1;
-                console.log('Walls level up');
+                console.log('Walls level up in room ' + creep.room.name);
             }
         }
         return levels[Memory.wallLevel]

@@ -23,7 +23,7 @@ var roleBuilder = {
             }
             //若果没有工地，还要兼职修塔
             else{
-                var towers = Game.rooms[Memory.roomName].find(FIND_STRUCTURES, 
+                var towers = creep.room.find(FIND_STRUCTURES, 
                     {filter: (structure) => 
                         {return (structure.structureType==STRUCTURE_TOWER && structure.store.getFreeCapacity(RESOURCE_ENERGY)>0)}
                     });

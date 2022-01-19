@@ -26,10 +26,10 @@ var roleCarrier = {
             }
             //若果不需要繁殖能量满，兼职修塔
             else{
-                var towers = Game.rooms[Memory.roomName].find(FIND_STRUCTURES, 
+                var towers = creep.room.find(FIND_STRUCTURES, 
                     {filter: (structure) => 
                         {return (structure.structureType==STRUCTURE_TOWER && structure.store.getFreeCapacity(RESOURCE_ENERGY)>0)}
-                    });
+                    })
                 if (towers.length){
                     if (creep.transfer(towers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
                         creep.moveTo(towers[0])

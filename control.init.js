@@ -1,23 +1,16 @@
 //初始化脚本
+Room = require('rooms')
 
 var initializer = {
 
-    initGame: function(roomName, sourceIds){
+    addARoom: function(roomName, sourceIds, spawnName){
         /* 
-        初始化整个房间，暂时不支持多房间
-        在内存中加入sources储存本房间所有的资源点，并且可以绑定农民与容器
+        增加一个初始化的房间
+        创建一个房间对象
+        在内存中的rooms列表中加入这个房间对象
         */
-        Memory.roomName = roomName
-        let sources = []
-        for (let sourceId of sourceIds){
-            let obj = {
-                id: sourceId,
-                bindHarvester: null,
-                bindContainer: null
-            }
-            sources.push(obj)
-        }
-        Memory.sources = sources
+        room = new Room(roomName, sourceIds, spawnName)
+        Memory.rooms.push(room)
     },
     
 }
