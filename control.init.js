@@ -10,6 +10,8 @@ var initializer = {
         在内存中的rooms列表中加入这个房间对象
         */
         room = new Room(roomName, sourceIds, spawnName)
+        //最初开局，将rooms初始化为[]
+        if (!Memory.rooms){Memory.rooms = []}
         Memory.rooms.push(room)
     },
     

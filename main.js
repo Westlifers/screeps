@@ -1,12 +1,13 @@
 var funcs = require('funcs')
-var autoSpawn = require('control.autospawn')
 var structureTower = require('structure.tower')
 
 module.exports.loop = function () {
 
     //清理死亡creep的内存
-    funcs.clear_memory();
+    funcs.clear_memory()
 
+    //防止开局报错锁死
+    if (!Memory.rooms){return}
     //逐房间执行逻辑
     for (let room of Memory.rooms){
         //检查此房间是否需要繁殖
