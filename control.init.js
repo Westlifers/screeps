@@ -13,6 +13,15 @@ var initializer = {
         Memory.rooms.push(room)
     },
     
+    deleteARoom: function(roomName){
+        //删除一个房间
+        for (room of Memory.rooms){
+            if (room.roomName == roomName){
+                Memory.rooms.remove(room)
+            }
+        }
+    },
+
 }
 
 module.exports = initializer

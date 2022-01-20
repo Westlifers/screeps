@@ -1,6 +1,5 @@
 //塔
 
-var roleWallrepairer = require('role.wallrepairer')
 var whitelist = require('whitelist')
 
 var tower = {
@@ -12,7 +11,7 @@ var tower = {
         包括寻找敌方玩家以及找寻缺损墙壁进行修复
         优先逻辑为找寻敌军
         */
-        var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+        var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS)
         if(closestHostile) {
             var username = closestHostile.owner.username
             //查询白名单，如果该用户在其中，直接返回不作响应
@@ -24,8 +23,14 @@ var tower = {
         //刷墙逻辑，仅在剩余能量400以上才执行
         else{
             if (tower.store[RESOURCE_ENERGY] >= 400){
+                //获取塔所在房间的墙应该修到多少hits
+                for (room of Memory.rooms){
+                    if (room.roomName == creep.room.name){
+                        var repaierHitsTo = room.wallsHitsTo
+                    }
+                }
                 var target = tower.pos.findClosestByRange(FIND_STRUCTURES, {filter: (structure) => {
-                    return (structure.structureType == STRUCTURE_WALL && structure.hitsMax/structure.hits >= roleWallrepairer.repaierHitsTo)
+                    return (structure.structureType == STRUCTURE_WALL && structure.hitsMax/structure.hits >= repaierHitsTo)
                 }})
                 if (target){
                     tower.repair(target)

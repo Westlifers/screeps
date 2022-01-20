@@ -1,50 +1,32 @@
 //刷墙工
 
 var roleWallrepairer = {
-
-    get repaierHitsTo(){
-        //优先查询内存中的painting变量是否允许刷墙，若否，返回levels[0]（这意味着认为墙等级为0，所有墙只刷到1/3000）
-        var levels = [3000, 300, 150, 60, 30, 15, 6, 3, 2, 1.5, 1.2, 1]
-        if (!Memory.painting){return levels[0]}
-        if (Memory.wallLevel <= levels.length - 1){
-            var go_to_next_level = true;
-            var walls = creep.room.find(FIND_STRUCTURES, {filter: (structure) => (structure.structureType == STRUCTURE_WALL && structure.pos.y != 0)});
-            for (let wallIndex in walls){
-                let wall = walls[wallIndex];
-                if (wall.hitsMax/wall.hits <= levels[Memory.wallLevel]){
-                    go_to_next_level = (go_to_next_level && true);
-                }
-                else{
-                    go_to_next_level = (go_to_next_level && false);
-                }
-            }
-            if (go_to_next_level){
-                Memory.wallLevel = Memory.wallLevel + 1;
-                console.log('Walls level up in room ' + creep.room.name);
-            }
-        }
-        return levels[Memory.wallLevel]
-    },
     
     run: function(creep){
 
         if (creep.memory.repairing && creep.store[RESOURCE_ENERGY] == 0){
-            creep.memory.repairing = false;
-            creep.say('🔄 harvest');
+            creep.memory.repairing = false
+            creep.say('🔄 harvest')
         }
         if (!creep.memory.repairing && creep.store.getFreeCapacity() == 0){
-            creep.memory.repairing = true;
-            creep.say('🚧 repair walls');
+            creep.memory.repairing = true
+            creep.say('🚧 repair walls')
         }
 
         //刷墙逻辑
         if (creep.memory.repairing){
+            //获取爬所在房间的墙应该修到多少hits
+            for (room of Memory.rooms){
+                if (room.roomName == creep.room.name){
+                    var repaierHitsTo = room.wallsHitsTo
+                }
+            }
             var target = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: (structure) => {
-                return (structure.structureType == STRUCTURE_WALL && structure.hitsMax/structure.hits >= this.repaierHitsTo)
-            }});
+                return (structure.structureType == STRUCTURE_WALL && structure.hitsMax/structure.hits >= repaierHitsTo)
+            }})
             if (target) {
                 if (creep.repair(target)==ERR_NOT_IN_RANGE){
-                    creep.moveTo(target);
+                    creep.moveTo(target)
                 }
             }
         }

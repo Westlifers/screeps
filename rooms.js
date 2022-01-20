@@ -4,8 +4,8 @@ class Room {
     constructor(roomName, sourceIds, spawnName){
         this.roomName = roomName
         this.spawnName = spawnName
+
         this.sources = []
-        this.wallLevel = 0
         for (let sourceId of sourceIds){
             let obj = {
                 id: sourceId,
@@ -13,6 +13,9 @@ class Room {
             }
             this.sources.push(obj)
         }
+
+        this.wallLevel = 0
+        
         this.harvesters_needed = 2
         this.upgraders_needed = 2
         this.fixers_needed = 2
@@ -298,6 +301,30 @@ class Room {
         if (room.find(FIND_MY_CREEPS).length <= 2 || containers.length == 0){var result = 1}
 
         return result
+    }
+    get wallsHitsTo(){
+        var levels = [3000, 300, 150, 60, 30, 15, 6, 3, 2, 1.5, 1.2, 1]
+        //优先查询内存中的painting变量是否允许刷墙，若否，返回levels[0]（这意味着认为墙等级为0，所有墙只刷到1/3000）
+        if (!this.painting){return levels[0]}
+        if (this.wallLevel <= levels.length - 1){
+            var go_to_next_level = true
+            //注意找墙时要排除边缘的系统隔离墙
+            var walls = Game.rooms[this.roomName].find(FIND_STRUCTURES, {filter: (structure) => (structure.structureType == STRUCTURE_WALL && (structure.pos.x > 0 && structure.pos.x < 49 && structure.pos.y > 0 && structure.pos.y < 49))})
+            for (let wallIndex in walls){
+                let wall = walls[wallIndex]
+                if (wall.hitsMax/wall.hits <= levels[Memory.wallLevel]){
+                    go_to_next_level = (go_to_next_level && true)
+                }
+                else{
+                    go_to_next_level = (go_to_next_level && false)
+                }
+            }
+            if (go_to_next_level){
+                this.wallLevel = this.wallLevel + 1
+                console.log('Walls level up in room ' + this.roomName)
+            }
+        }
+        return levels[this.wallLevel]
     }
 }
 
