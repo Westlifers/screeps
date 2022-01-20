@@ -1,6 +1,6 @@
 //定义房间类，包括整个房间的各种参数，内置各种繁殖方法
 
-class Room {
+class myRoom {
     constructor(roomName, sourceIds, spawnName){
         this.roomName = roomName
         this.spawnName = spawnName
@@ -15,7 +15,7 @@ class Room {
         }
 
         this.wallLevel = 0
-        
+
         this.harvesters_needed = 2
         this.upgraders_needed = 2
         this.fixers_needed = 2
@@ -328,4 +328,4 @@ class Room {
     }
 }
 
-module.exports = Room
+module.exports = myRoom

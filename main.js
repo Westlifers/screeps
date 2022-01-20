@@ -17,7 +17,7 @@ module.exports.loop = function () {
         }
         
         //遍历此房间的塔并调用塔的工作程序
-        var towers = Game.rooms[room.roomName].find(FIND_STRUCTURES, {filter: (structure) => {return structure.structureType == STRUCTURE_TOWER}});
+        var towers = Game.rooms[Memory.rooms.roomName].find(FIND_STRUCTURES, {filter: (structure) => {return structure.structureType == STRUCTURE_TOWER}})
         for (var tower of towers){
             structureTower.run(tower)
         }
